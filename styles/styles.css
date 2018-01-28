@@ -1,0 +1,12 @@
+.gauge-items{
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.gauge-item{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+  

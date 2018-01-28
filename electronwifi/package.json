@@ -1,0 +1,11 @@
+{
+  "name": "electronwifi",
+  "version": "1.0.1",
+  "description": "Example for using node-pre-gyp for cross-platform binaries",
+  "gypfile": true,
+  "main": "./build/Release/electronwifi",
+  "license": "MIT",
+  "dependencies": {
+    "nan": "^2.3.3"
+  }
+}
