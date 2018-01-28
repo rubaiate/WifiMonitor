@@ -1,0 +1,7 @@
+node_modules
+**/build/
+\.vscode/
+*.lock
+yarn-error\.log
+**/bin/linux-x64-54/
+**/package-lock\.json
