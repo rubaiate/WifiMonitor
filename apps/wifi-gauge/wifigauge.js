@@ -1,4 +1,4 @@
-const gaugeLibrary = require('../gauge.min.js')
+const gaugeLibrary = require('../../tpscripts/gauge.min.js')
 
 const opts = {
     angle: -0.2, // The span of the gauge arc

@@ -4,7 +4,7 @@
 
 const electronwifi = require('electronwifi')
 
-const WifiGauge = require('./wifi-gauge/wifigauge')
+const WifiGauge = require('./wifigauge')
 
 const gauges = new Map()
 
