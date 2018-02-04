@@ -1,3 +1,15 @@
+.flex-wrap-items{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.flex-wrap-item{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .gauge-items{
   display:flex;
   flex-wrap: wrap;
@@ -7,6 +19,23 @@
   display:flex;
   flex-direction: column;
   align-items: center;
+}
+
+
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  margin: 2px 8px;
+  padding: 8px 8px;
 }
 
   
