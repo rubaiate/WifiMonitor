@@ -8,13 +8,12 @@ const template = [
         label : 'File',
         submenu : [
             {
-                label : 'Open'
+                label : 'Open',
+                click() { openSVG()}
             },
             {
                 label : 'Save',
-                click() {
-                    saveSVG()
-                }
+                click() { saveSVG()}
             }
         ]
     }
@@ -23,33 +22,7 @@ const template = [
 const menu = Menu.buildFromTemplate(template)
 Menu.setApplicationMenu(menu)
 
-var canvas = SVG('drawing').size('100%', '100%').viewbox(0,0,800,1000)
-
-const inputFileName = path.join(__dirname, '../../resources/images/sample.svg')
-console.log("Input file name " + inputFileName)
-fs.readFile(inputFileName, 'utf-8', (err, data ) => {
-    if(err){
-        alert("Failed to load input file " + err.message)
-    } else {
-        canvas.svg(data)
-
-        //since text was drawn onto canvas before drawing external svg 
-        //text should be moved into front again
-        text.front();
-    }
-})
-
-
-const text = canvas.text("Hello1")
-.x(200)
-.y(200)
-
-text.font({
-family:   'Helvetica'
-, size:     100
-// , anchor:   'middle'
-// , leading:  '1.5em'
-})
+let canvas = SVG('drawing').size('100%', '100%').viewbox(0,0,800,1000)
 
 saveSVG = () => {
     const fileName = dialog.showSaveDialog( 
@@ -62,7 +35,6 @@ saveSVG = () => {
                 return;
             }
         
-            console.log("File Name" + fileName)
             // fileName is a string that contains the path and filename created in the save file dialog.  
             fs.writeFile(fileName, canvas.svg(), (err) => {
                 if(err){
@@ -73,6 +45,50 @@ saveSVG = () => {
             });
         } 
     )
+}
 
+openSVG = () => {
+    const fileNames = dialog.showOpenDialog( {
+        options: {
+            title : "Import SVG",
+            multiSelections: false
+        }, 
+        filters: [
+            {name : 'SVG', extensions:['svg']}
+        ]
+    })
 
+    if (fileNames === undefined || fileNames.size <= 0){
+        console.log("You didn't open the file");
+        return;
+    }
+
+    loadSVG(fileNames[0])
+
+}
+
+loadSVG = (fileName) => {
+    canvas = SVG('drawing').size('100%', '100%').viewbox(0,0,800,1000)
+
+    console.log(fileName)
+    fs.readFile(fileName, 'utf-8', (err, data ) => {
+        if(err){
+            alert("Failed to load input file " + err.message)
+        } else {
+            canvas.svg(data)
+
+            drawText()
+        }
+    })
+}
+
+drawText = () => {
+    const text = canvas.text("Hello1")
+    .x(200)
+    .y(200)
+
+    text.font({
+    family:   'Helvetica'
+    , size:     100
+    })
 }
