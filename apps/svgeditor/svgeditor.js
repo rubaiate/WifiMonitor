@@ -1,6 +1,7 @@
 const SVG = require('svg.js')
 const {dialog, Menu} = require('electron').remote
 const fs = require('fs');
+const path = require('path')
 
 const template = [ 
     {
@@ -24,34 +25,37 @@ Menu.setApplicationMenu(menu)
 
 var canvas = SVG('drawing').size('100%', '100%').viewbox(0,0,800,1000)
 
-// canvas.rect(100, 100).move(100, 50).fill('#f06')
-const inputFileName = '../../resources/images/sample.svg'
+const inputFileName = path.join(__dirname, '../../resources/images/sample.svg')
+console.log("Input file name " + inputFileName)
 fs.readFile(inputFileName, 'utf-8', (err, data ) => {
-    console.log("File loaded")
-    canvas.svg(data)
+    if(err){
+        alert("Failed to load input file " + err.message)
+    } else {
+        canvas.svg(data)
+
+        //since text was drawn onto canvas before drawing external svg 
+        //text should be moved into front again
+        text.front();
+    }
 })
-const text = canvas.text("Hello")
-    .x(200)
-    .y(200)
+
+
+const text = canvas.text("Hello1")
+.x(200)
+.y(200)
 
 text.font({
-    family:   'Helvetica'
-    , size:     100
-    // , anchor:   'middle'
-    // , leading:  '1.5em'
-    })
-console.log(canvas.svg())
-
-console.log(process.type)
+family:   'Helvetica'
+, size:     100
+// , anchor:   'middle'
+// , leading:  '1.5em'
+})
 
 saveSVG = () => {
     const fileName = dialog.showSaveDialog( 
         options={
             title : "Export SVG"
         }, 
-        // filters = [
-        //     { name:"SVG", extensions:['svg']}
-        // ],
         callback = (fileName) => {
             if (fileName === undefined){
                 console.log("You didn't save the file");
