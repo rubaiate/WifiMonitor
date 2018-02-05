@@ -18,6 +18,7 @@
     "electron-reload": "^1.2.2"
   },
   "dependencies": {
-    "electronwifi": "file:./addon/electronwifi"
+    "electronwifi": "file:./addon/electronwifi",
+    "svg.js": "^2.6.3"
   }
 }
