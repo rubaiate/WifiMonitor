@@ -1,7 +1,9 @@
 const SVG = require('svg.js')
-const {dialog, Menu} = require('electron').remote
+const remote = require('electron').remote
+const {dialog, Menu} = remote
 const fs = require('fs');
 const path = require('path')
+const url = require('url')
 
 const template = [ 
     {
@@ -14,6 +16,15 @@ const template = [
             {
                 label : 'Save',
                 click() { saveSVG()}
+            }
+        ]
+    },
+    {
+        label : 'App',
+        submenu : [
+            {
+                label : "Main Menu",
+                click() { gotoMainMenu()}
             }
         ]
     }
@@ -68,7 +79,7 @@ openSVG = () => {
 }
 
 loadSVG = (fileName) => {
-    canvas = SVG('drawing').size('100%', '100%').viewbox(0,0,800,1000)
+    canvas.clear()
 
     console.log(fileName)
     fs.readFile(fileName, 'utf-8', (err, data ) => {
@@ -91,4 +102,13 @@ drawText = () => {
     family:   'Helvetica'
     , size:     100
     })
+}
+
+gotoMainMenu = () => {
+    const indexHtml = path.join(__dirname, '../../index.html');
+    remote.getCurrentWindow().loadURL(url.format({
+        pathname: indexHtml,
+        protocol: 'file:',
+        slashes: true
+      }))
 }
